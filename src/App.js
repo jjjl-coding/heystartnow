@@ -1,5 +1,5 @@
-import "./App.css";
 import styled, { createGlobalStyle } from "styled-components";
+import Modal from "react-modal";
 import { getRandomNumber } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
 import { useEffect, useState } from "react";
@@ -8,16 +8,17 @@ import { Card } from "./Card";
 const randomNumber = getRandomNumber();
 
 function App() {
-  const [inputFocus, setInputFocus] = useState();
-  const [inputValues, setInputValues] = useState([]);
-
-  const [cardListValues, setResultValues] = useState([]);
-
+  const [inputFocus, setInputFocus] = useState(0);
+  const [inputValues, setInputValues] = useState([0, 0, 0]);
+  const [cardListValues, setCardListValues] = useState([]);
+  const [gamePlaying, setGamePlaying] = useState(false);
+  let count = 0;
   function oninput(e) {
     if (e.target.value.length > 1) {
       const clonedArray = [...inputValues];
       console.log(clonedArray);
       clonedArray[inputFocus] = Number(e.target.value.slice(1));
+      console.log(clonedArray);
       setInputValues(clonedArray);
     }
   }
@@ -39,6 +40,19 @@ function App() {
   return (
     <Wrapper>
       <ContentsWrapper>
+        <Modal
+          isOpen={gamePlaying}
+          onRequestClose={() => setGamePlaying(false)}
+        >
+          승리하셨습니다.
+          <button
+            onClick={() => {
+              window.location.replace("/App");
+            }}
+          >
+            확인
+          </button>
+        </Modal>
         <Header>
           <h1>숫자 야구 게임 {randomNumber}</h1>
         </Header>
@@ -78,11 +92,15 @@ function App() {
             })}
             <ConfirmButton
               onClick={() => {
-                getResult(inputValues, randomNumber);
-                setResultValues([
+                const result = getResult(inputValues, randomNumber);
+                setCardListValues([
                   ...cardListValues,
-                  { inputValues, result: getResult(inputValues, randomNumber) },
+                  { inputValues, result: result },
                 ]);
+                console.log(result);
+                if (result.victory === true) {
+                  setGamePlaying(true);
+                }
               }}
             >
               입력
