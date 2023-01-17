@@ -13,6 +13,7 @@ function App() {
   const [cardListValues, setCardListValues] = useState([]);
   const [gamePlaying, setGamePlaying] = useState(false);
   let count = 0;
+
   function oninput(e) {
     if (e.target.value.length > 1) {
       const clonedArray = [...inputValues];
@@ -40,10 +41,7 @@ function App() {
   return (
     <Wrapper>
       <ContentsWrapper>
-        <Modal
-          isOpen={gamePlaying}
-          onRequestClose={() => setGamePlaying(false)}
-        >
+        <Modal isOpen={gamePlaying} style={modalstyle}>
           승리하셨습니다.
           <button
             onClick={() => {
@@ -122,7 +120,35 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
 `;
-
+const modalstyle = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.75)",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "200px",
+    height: "80px",
+    border: "1px solid #ccc",
+    background: "#fff",
+    overflow: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "10px",
+    outline: "none",
+    padding: "20px",
+  },
+};
 const ContentsWrapper = styled.div`
   width: 500px;
   height: 100%;
