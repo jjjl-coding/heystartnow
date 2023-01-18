@@ -2,42 +2,43 @@ import styled, { createGlobalStyle } from "styled-components";
 import Modal from "react-modal";
 import { getRandomNumber } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "./Card";
 
 const randomNumber = getRandomNumber();
 
 function App() {
   const [inputFocus, setInputFocus] = useState(0);
-  const [inputValues, setInputValues] = useState([0, 0, 0]);
+  const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
   const [gamePlaying, setGamePlaying] = useState(false);
   let count = 0;
 
   function oninput(e) {
+    let number = Number(e.target.value);
     if (e.target.value.length > 1) {
-      const clonedArray = [...inputValues];
-      console.log(clonedArray);
-      clonedArray[inputFocus] = Number(e.target.value.slice(1));
-      console.log(clonedArray);
-      setInputValues(clonedArray);
+      number = Number(e.target.value.slice(1));
     }
+    changeInputValue(number, inputFocus);
   }
+
   function nextFocus() {
     if (inputFocus === 2) {
       return setInputFocus(0);
     }
     setInputFocus(inputFocus + 1);
   }
+
   function changeInputValue(number, index) {
     const clonedArray = [...inputValues];
     clonedArray[index] = number;
     setInputValues(clonedArray);
-    nextFocus();
   }
+
   function changeInputfocus(e) {
     setInputFocus(Number(e.target.id));
   }
+
   return (
     <Wrapper>
       <ContentsWrapper>
@@ -82,6 +83,7 @@ function App() {
                 <NumerButton
                   onClick={() => {
                     changeInputValue(number, inputFocus);
+                    nextFocus();
                   }}
                 >
                   {number}
@@ -120,6 +122,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
 `;
+//모달
 const modalstyle = {
   overlay: {
     position: "fixed",
@@ -205,11 +208,15 @@ const InputBox = styled.input`
   width: 50px;
   height: 50px;
   border: 1px solid black;
-
+  font-size: 50px;
+  text-align: center;
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+  :focus {
+    outline: none;
   }
 `;
 
