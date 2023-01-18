@@ -15,9 +15,9 @@ function App() {
   let count = 0;
 
   function oninput(e) {
-    let number = Number(e.target.value);
+    let number = e.target.value;
     if (e.target.value.length > 1) {
-      number = Number(e.target.value.slice(1));
+      number = e.target.value[e.target.value.length - 1];
     }
     changeInputValue(number, inputFocus);
   }
@@ -31,7 +31,7 @@ function App() {
 
   function changeInputValue(number, index) {
     const clonedArray = [...inputValues];
-    clonedArray[index] = number;
+    clonedArray[index] = Number(number);
     setInputValues(clonedArray);
   }
 
@@ -42,8 +42,9 @@ function App() {
   return (
     <Wrapper>
       <ContentsWrapper>
+        {/* 모달입니다 */}
         <Modal isOpen={gamePlaying} style={modalstyle}>
-          승리하셨습니다.
+          와! 우승!
           <button
             onClick={() => {
               window.location.replace("/App");
@@ -56,6 +57,7 @@ function App() {
           <h1>숫자 야구 게임 {randomNumber}</h1>
         </Header>
         <Main>
+          {/* 입력칸 3개 생성 */}
           <InputWrapper>
             {[0, 1, 2].map((id) => {
               return (
@@ -70,13 +72,14 @@ function App() {
             })}
           </InputWrapper>
           <CardList>
+            {/* 입력한 숫자에 대한 결과 카드 */}
             {cardListValues.map((item) => {
               return <Card item={item}></Card>;
             })}
           </CardList>
         </Main>
         <Footer>
-          {/* 숫자 */}
+          {/* 숫자 버튼 */}
           <div>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => {
               return (
@@ -90,6 +93,7 @@ function App() {
                 </NumerButton>
               );
             })}
+            {/* 입력 버튼 */}
             <ConfirmButton
               onClick={() => {
                 const result = getResult(inputValues, randomNumber);
@@ -221,6 +225,20 @@ const InputBox = styled.input`
 `;
 
 const CardList = styled.div`
+  display: grid;
+  width: 100%;
   height: 300px;
   background-color: salmon;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow: overlay;
+  &::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 3px;
+  }
 `;
