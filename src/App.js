@@ -6,16 +6,15 @@ import { useState } from "react";
 import { Card } from "./Card";
 
 let randomNumber = getRandomNumber();
+let count = 1;
 
 function App() {
   const [inputFocus, setInputFocus] = useState(0);
   const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
   const [gamePlaying, setGamePlaying] = useState(false);
-  let count = 0;
 
   function oninput(e) {
-    console.log(e);
     let number = Number(e.target.value);
     if (e.target.value.length > 1) {
       number = e.target.value[e.target.value.length - 1];
@@ -52,13 +51,15 @@ function App() {
               setCardListValues([]);
               setInputValues(["", "", ""]);
               randomNumber = getRandomNumber();
+              count++;
             }}
           >
             다시하기
           </button>
         </Modal>
         <Header>
-          <h1>숫자 야구 게임 {randomNumber}</h1>
+          <h1>제 {count}회 숫자 야구 게임</h1>
+          <h1> {randomNumber}</h1>
         </Header>
         <Main>
           {/* 입력칸 3개 생성 */}
