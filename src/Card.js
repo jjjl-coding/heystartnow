@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export function Card({ item }) {
-  return (
+  return item.result.strike === 3 ? null : (
     <Box>
       <InputValue>
         {item.inputValues.map((inputValue) => {
