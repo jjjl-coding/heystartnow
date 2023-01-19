@@ -15,7 +15,8 @@ function App() {
   let count = 0;
 
   function oninput(e) {
-    let number = e.target.value;
+    console.log(e);
+    let number = Number(e.target.value);
     if (e.target.value.length > 1) {
       number = e.target.value[e.target.value.length - 1];
     }
@@ -31,7 +32,7 @@ function App() {
 
   function changeInputValue(number, index) {
     const clonedArray = [...inputValues];
-    clonedArray[index] = Number(number);
+    clonedArray[index] = number;
     setInputValues(clonedArray);
   }
 
@@ -104,7 +105,6 @@ function App() {
                   ...cardListValues,
                   { inputValues, result: result },
                 ]);
-                console.log(result);
                 if (result.victory === true) {
                   setGamePlaying(true);
                 }
