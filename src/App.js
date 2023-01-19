@@ -5,7 +5,7 @@ import { getResult } from "./gamePolicy/getResult";
 import { useState } from "react";
 import { Card } from "./Card";
 
-const randomNumber = getRandomNumber();
+let randomNumber = getRandomNumber();
 
 function App() {
   const [inputFocus, setInputFocus] = useState(0);
@@ -47,10 +47,13 @@ function App() {
           와! 우승!
           <button
             onClick={() => {
-              window.location.replace("/App");
+              setGamePlaying(false);
+              setCardListValues([]);
+              setInputValues(["", "", ""]);
+              randomNumber = getRandomNumber();
             }}
           >
-            확인
+            다시하기
           </button>
         </Modal>
         <Header>
@@ -118,6 +121,7 @@ function App() {
 
 export default App;
 
+//스타일
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -156,6 +160,7 @@ const modalstyle = {
     padding: "20px",
   },
 };
+
 const ContentsWrapper = styled.div`
   width: 500px;
   height: 100%;
@@ -212,6 +217,7 @@ const InputBox = styled.input`
   width: 50px;
   height: 50px;
   border: 1px solid black;
+  border-radius: 10px;
   font-size: 50px;
   text-align: center;
   ::-webkit-outer-spin-button,
