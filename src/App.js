@@ -50,6 +50,7 @@ function App() {
               setGamePlaying(false);
               setCardListValues([]);
               setInputValues(["", "", ""]);
+              setInputFocus(0);
               randomNumber = getRandomNumber();
               count++;
             }}
