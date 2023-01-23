@@ -1,8 +1,8 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Modal from "react-modal";
 import { getRandomNumber } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card } from "./Card";
 
 let randomNumber = getRandomNumber();
@@ -13,6 +13,12 @@ function App() {
   const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
   const [gamePlaying, setGamePlaying] = useState(false);
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [cardListValues]);
 
   function oninput(e) {
     let number = Number(e.target.value);
@@ -82,6 +88,7 @@ function App() {
             {cardListValues.map((item) => {
               return <Card item={item}></Card>;
             })}
+            <div ref={bottomRef} />
           </CardList>
         </Main>
         <Footer>
@@ -123,15 +130,6 @@ function App() {
 
 export default App;
 
-//스타일
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
 //모달
 const modalstyle = {
   overlay: {
@@ -162,6 +160,15 @@ const modalstyle = {
     padding: "20px",
   },
 };
+//스타일
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
 
 const ContentsWrapper = styled.div`
   width: 500px;
@@ -185,26 +192,35 @@ const Header = styled.div`
 const Main = styled.div`
   width: 100%;
   height: 400px;
-  background-color: red;
+  //background-color: red;
 `;
 
 const Footer = styled.div`
   width: 100%;
-  height: 100px;
-  background-color: green;
+  height: 160px;
+  //background-color: green;
   /* height:25%; */
   /* border:1px solid blue; */
 `;
 
 const NumerButton = styled.button`
+  font-size: 30px;
+  width: 17%;
+  height: 80px;
   border-radius: 5px;
-  background-color: blue;
+  //background-color: blue;
+  //color: #fff;
   padding: 10px;
 `;
 
 const ConfirmButton = styled.button`
+  font-size: 20px;
+  width: 15%;
+  height: 80px;
+
   border-radius: 5px;
-  background-color: red;
+  //background-color: red;
+  //color: #fff;
   padding: 10px;
 `;
 
@@ -233,10 +249,12 @@ const InputBox = styled.input`
 `;
 
 const CardList = styled.div`
+  /* float: "left";
+  clear: "both"; */
   display: grid;
   width: 100%;
   height: 300px;
-  background-color: salmon;
+  //background-color: salmon;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   overflow: overlay;
