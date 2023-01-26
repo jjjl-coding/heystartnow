@@ -45,6 +45,13 @@ function App() {
     setInputFocus(Number(e.target.id));
   }
 
+  function confirmButtonClickHandler() {
+    const result = getResult(inputValues, randomNumber);
+    setCardListValues([...cardListValues, { inputValues, result: result }]);
+    if (result.victory === true) {
+      setGamePlaying(true);
+    }
+  }
   return (
     <Wrapper>
       <ContentsWrapper>
@@ -109,14 +116,7 @@ function App() {
             {/* 입력 버튼 */}
             <ConfirmButton
               onClick={() => {
-                const result = getResult(inputValues, randomNumber);
-                setCardListValues([
-                  ...cardListValues,
-                  { inputValues, result: result },
-                ]);
-                if (result.victory === true) {
-                  setGamePlaying(true);
-                }
+                confirmButtonClickHandler();
               }}
             >
               입력
