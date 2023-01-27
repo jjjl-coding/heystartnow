@@ -13,7 +13,7 @@ function App() {
   const [inputFocus, setInputFocus] = useState(0);
   const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
-  const [gamePlaying, setGamePlaying] = useState(false);
+  const [gameEnd, setGameEnd] = useState(false);
 
   function nextFocus() {
     if (inputFocus === 2) {
@@ -32,11 +32,11 @@ function App() {
     const result = getResult(inputValues, randomNumber);
     setCardListValues([...cardListValues, { inputValues, result: result }]);
     if (result.victory === true) {
-      setGamePlaying(true);
+      setGameEnd(true);
     }
   }
   function ClearGame() {
-    setGamePlaying(false);
+    setGameEnd(false);
     setCardListValues([]);
     setInputValues(["", "", ""]);
     setInputFocus(0);
@@ -48,7 +48,7 @@ function App() {
     <Wrapper>
       <ContentsWrapper>
         {/* 모달입니다 */}
-        <Modal isOpen={gamePlaying} style={modalstyle}>
+        <Modal isOpen={gameEnd} style={modalstyle}>
           와! 우승!
           <button
             onClick={() => {
