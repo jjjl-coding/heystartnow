@@ -4,6 +4,7 @@ import { getRandomNumber } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
 import { useState } from "react";
 import { Main } from "./Main";
+import { Footer } from "./Footer";
 
 let randomNumber = getRandomNumber();
 let count = 1;
@@ -21,9 +22,9 @@ function App() {
     setInputFocus(inputFocus + 1);
   }
 
-  function changeInputValue(number, index) {
+  function changeInputValue(number) {
     const clonedArray = [...inputValues];
-    clonedArray[index] = number;
+    clonedArray[inputFocus] = number;
     setInputValues(clonedArray);
   }
 
@@ -34,7 +35,7 @@ function App() {
       setGamePlaying(true);
     }
   }
-  function modalButtonClickHandler() {
+  function ClearGame() {
     setGamePlaying(false);
     setCardListValues([]);
     setInputValues(["", "", ""]);
@@ -51,48 +52,24 @@ function App() {
           와! 우승!
           <button
             onClick={() => {
-              modalButtonClickHandler();
+              ClearGame();
             }}
           >
             다시하기
           </button>
         </Modal>
-        <Header>
-          <h1>제 {count}회 숫자 야구 게임</h1>
-          <h1> {randomNumber}</h1>
-        </Header>
+        <Header />
         <Main
-          inputFocus={inputFocus}
           changeInputValue={changeInputValue}
           setInputFocus={setInputFocus}
           inputValues={inputValues}
           cardListValues={cardListValues}
         />
-        <Footer>
-          {/* 숫자 버튼 */}
-          <div>
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => {
-              return (
-                <NumerButton
-                  onClick={() => {
-                    changeInputValue(number, inputFocus);
-                    nextFocus();
-                  }}
-                >
-                  {number}
-                </NumerButton>
-              );
-            })}
-            {/* 입력 버튼 */}
-            <ConfirmButton
-              onClick={() => {
-                confirmButtonClickHandler();
-              }}
-            >
-              입력
-            </ConfirmButton>
-          </div>
-        </Footer>
+        <Footer
+          changeInputValue={changeInputValue}
+          nextFocus={nextFocus}
+          confirmButtonClickHandler={confirmButtonClickHandler}
+        />
       </ContentsWrapper>
     </Wrapper>
   );
@@ -100,7 +77,15 @@ function App() {
 
 export default App;
 
-//모달
+function Header() {
+  return (
+    <HeaderWrapper>
+      <h1>제 {count}회 숫자 야구 게임</h1>
+      <h1> {randomNumber}</h1>
+    </HeaderWrapper>
+  );
+}
+//모달스타일
 const modalstyle = {
   overlay: {
     position: "fixed",
@@ -151,39 +136,10 @@ const ContentsWrapper = styled.div`
   border: 1px solid #cdcdcd;
 `;
 
-const Header = styled.div`
+const HeaderWrapper = styled.div`
   width: 100%;
   /* height:15%; */
 
   display: flex;
   justify-content: center;
-`;
-
-const Footer = styled.div`
-  width: 100%;
-  height: 160px;
-  //background-color: green;
-  /* height:25%; */
-  /* border:1px solid blue; */
-`;
-
-const NumerButton = styled.button`
-  font-size: 30px;
-  width: 17%;
-  height: 80px;
-  border-radius: 5px;
-  //background-color: blue;
-  //color: #fff;
-  padding: 10px;
-`;
-
-const ConfirmButton = styled.button`
-  font-size: 20px;
-  width: 15%;
-  height: 80px;
-
-  border-radius: 5px;
-  //background-color: red;
-  //color: #fff;
-  padding: 10px;
 `;

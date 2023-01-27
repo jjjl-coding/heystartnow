@@ -3,24 +3,17 @@ import { useEffect, useRef } from "react";
 import { Card } from "./Card";
 
 export function Main({
-  inputFocus,
   changeInputValue,
   setInputFocus,
   inputValues,
   cardListValues,
 }) {
-  const bottomRef = useRef(null);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [cardListValues]);
-
   function oninput(e) {
     let number = Number(e.target.value);
     if (e.target.value.length > 1) {
       number = e.target.value[e.target.value.length - 1];
     }
-    changeInputValue(number, inputFocus);
+    changeInputValue(number);
   }
   function changeInputfocus(e) {
     setInputFocus(Number(e.target.id));
@@ -42,17 +35,30 @@ export function Main({
           );
         })}
       </InputWrapper>
-      <CardList>
-        {/* 입력한 숫자에 대한 결과 카드 */}
-        {cardListValues.map((item) => {
-          return <Card item={item}></Card>;
-        })}
-        <div ref={bottomRef} />
-      </CardList>
+      <CardList cardListValues={cardListValues} />
     </MainWrapper>
   );
 }
 
+function CardList({ cardListValues }) {
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [cardListValues]);
+
+  return (
+    <CardListWrapper>
+      {/* 입력한 숫자에 대한 결과 카드 */}
+      {cardListValues.map((item) => {
+        return <Card item={item}></Card>;
+      })}
+      <div ref={bottomRef} />
+    </CardListWrapper>
+  );
+}
+
+//스타일
 const MainWrapper = styled.div`
   width: 100%;
   height: 400px;
@@ -82,7 +88,7 @@ const InputBox = styled.input`
   }
 `;
 
-const CardList = styled.div`
+const CardListWrapper = styled.div`
   /* float: "left";
   clear: "both"; */
   display: grid;
