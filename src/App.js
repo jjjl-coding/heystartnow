@@ -52,6 +52,14 @@ function App() {
       setGamePlaying(true);
     }
   }
+  function modalButtonClickHandler() {
+    setGamePlaying(false);
+    setCardListValues([]);
+    setInputValues(["", "", ""]);
+    setInputFocus(0);
+    randomNumber = getRandomNumber();
+    count++;
+  }
   return (
     <Wrapper>
       <ContentsWrapper>
@@ -60,12 +68,7 @@ function App() {
           와! 우승!
           <button
             onClick={() => {
-              setGamePlaying(false);
-              setCardListValues([]);
-              setInputValues(["", "", ""]);
-              setInputFocus(0);
-              randomNumber = getRandomNumber();
-              count++;
+              modalButtonClickHandler();
             }}
           >
             다시하기
