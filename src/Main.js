@@ -7,6 +7,7 @@ export function Main({
   setInputFocus,
   inputValues,
   cardListValues,
+  maxLength,
 }) {
   return (
     <MainWrapper>
@@ -15,6 +16,7 @@ export function Main({
         setInputFocus={setInputFocus}
         inputValues={inputValues}
         changeInputValue={changeInputValue}
+        maxLength={maxLength}
       />
       <CardList cardListValues={cardListValues} />
     </MainWrapper>

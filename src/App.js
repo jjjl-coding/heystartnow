@@ -1,23 +1,25 @@
 import styled from "styled-components";
 import Modal from "react-modal";
-import { getRandomNumber } from "./utils/numberUtils";
+import { getRandomNumberList } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
 import { useState } from "react";
 import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
-let randomNumber = getRandomNumber();
-
 function App() {
+  const maxLength = 5;
   const [inputFocus, setInputFocus] = useState(0);
   const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
+  const [randomNumber, setRandomNumber] = useState(
+    getRandomNumberList(maxLength)
+  );
 
   function nextFocus() {
-    if (inputFocus === 2) {
+    if (inputFocus === maxLength) {
       return setInputFocus(0);
     }
     setInputFocus(inputFocus + 1);
@@ -41,7 +43,7 @@ function App() {
     setCardListValues([]);
     setInputValues(["", "", ""]);
     setInputFocus(0);
-    randomNumber = getRandomNumber();
+    setRandomNumber(getRandomNumberList(maxLength));
     setGameCount(gameCount + 1);
   }
 
@@ -65,6 +67,7 @@ function App() {
           setInputFocus={setInputFocus}
           inputValues={inputValues}
           cardListValues={cardListValues}
+          maxLength={maxLength}
         />
         <Footer
           changeInputValue={changeInputValue}

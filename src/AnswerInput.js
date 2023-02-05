@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export function AnswerInput({ setInputFocus, inputValues, changeInputValue }) {
+export function AnswerInput({
+  setInputFocus,
+  inputValues,
+  changeInputValue,
+  maxLength,
+}) {
   function oninput(e) {
     let number = Number(e.target.value);
     if (e.target.value.length > 1) {
@@ -14,14 +19,14 @@ export function AnswerInput({ setInputFocus, inputValues, changeInputValue }) {
 
   return (
     <InputWrapper>
-      {[0, 1, 2].map((id) => {
+      {Array.from({ length: maxLength }).map((id, index) => {
         return (
           <InputBox
-            id={id}
+            id={Number(index)}
             onFocus={changeInputfocus}
             type="number"
             onInput={oninput}
-            value={inputValues[id]}
+            value={inputValues[index]}
           ></InputBox>
         );
       })}

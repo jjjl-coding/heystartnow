@@ -1,16 +1,21 @@
-export  function getRandomNumber () {
-    const array = [];
-    for(let i=0; i<3; i++) {
-        array.push(getSpareNumber(array))
-    }
-    return array
+export function getRandomNumberList(arrayLength) {
+  const array = [];
+  for (let i = 0; i < arrayLength; i++) {
+    array.push(getSpareNumber(array, arrayLength));
+  }
+  return array;
 }
 
- function getSpareNumber(array){
-    const randomNuber = Math.floor(Math.random()*10)
-    if(array.includes(randomNuber))
-    {
-        return getSpareNumber(array)
-    }
-    return randomNuber
+export function getRandomNumber(maxNumber) {
+  const randomNumber = Math.floor(Math.random() * maxNumber);
+
+  return randomNumber;
+}
+
+export function getSpareNumber(array, maxNumber) {
+  const randomNumber = getRandomNumber(maxNumber);
+  if (array.includes(randomNumber)) {
+    return getSpareNumber(array, maxNumber);
+  }
+  return randomNumber;
 }
