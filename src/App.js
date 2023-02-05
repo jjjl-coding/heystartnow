@@ -5,14 +5,15 @@ import { getResult } from "./gamePolicy/getResult";
 import { useState } from "react";
 import { Main } from "./Main";
 import { Footer } from "./Footer";
+import { Header } from "./Header";
 
 let randomNumber = getRandomNumber();
-let count = 1;
 
 function App() {
   const [inputFocus, setInputFocus] = useState(0);
   const [inputValues, setInputValues] = useState([]);
   const [cardListValues, setCardListValues] = useState([]);
+  const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
 
   function nextFocus() {
@@ -41,7 +42,7 @@ function App() {
     setInputValues(["", "", ""]);
     setInputFocus(0);
     randomNumber = getRandomNumber();
-    count++;
+    setGameCount(gameCount + 1);
   }
 
   return (
@@ -58,7 +59,7 @@ function App() {
             다시하기
           </button>
         </Modal>
-        <Header />
+        <Header gameCount={gameCount} />
         <Main
           changeInputValue={changeInputValue}
           setInputFocus={setInputFocus}
@@ -77,14 +78,6 @@ function App() {
 
 export default App;
 
-function Header() {
-  return (
-    <HeaderWrapper>
-      <h1>제 {count}회 숫자 야구 게임</h1>
-      <h1> {randomNumber}</h1>
-    </HeaderWrapper>
-  );
-}
 //모달스타일
 const modalstyle = {
   overlay: {
@@ -134,12 +127,4 @@ const ContentsWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #cdcdcd;
-`;
-
-const HeaderWrapper = styled.div`
-  width: 100%;
-  /* height:15%; */
-
-  display: flex;
-  justify-content: center;
 `;
