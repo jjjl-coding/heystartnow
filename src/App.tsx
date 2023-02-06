@@ -10,7 +10,7 @@ import { Header } from "./Header";
 function App() {
   const maxLength = 5;
   const [inputFocus, setInputFocus] = useState(0);
-  const [inputValues, setInputValues] = useState([]);
+  const [inputValues, setInputValues] = useState();
   const [cardListValues, setCardListValues] = useState([]);
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
