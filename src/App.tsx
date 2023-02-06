@@ -51,7 +51,7 @@ function App() {
     <Wrapper>
       <ContentsWrapper>
         {/* 모달입니다 */}
-        <Modal isOpen={gameEnd} style={modalstyle}>
+        <Modal isOpen={gameEnd}>
           와! 우승!
           <button
             onClick={() => {
