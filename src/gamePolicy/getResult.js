@@ -1,21 +1,12 @@
 export function getResult(tryAnswer, correctAnswer) {
-  let out = 3; //correctAnswer.length;
-  let strike = 0;
+  const out = getOut(tryAnswer, correctAnswer); //correctAnswer.length;
+  const strike = getStrike(tryAnswer, correctAnswer);
+  const ball = correctAnswer.length - out - strike;
   let victory = false;
-  // for (let i = 0; i < tryAnswer.length; i++) {
-  //   if (correctAnswer.includes(tryAnswer[i])) {
-  //     out--;
-  //   }
 
-  //   if (tryAnswer[i] === correctAnswer[i]) {
-  //     strike++;
-  //   }
-  // }
-
-  let ball = 0; //correctAnswer.length - out - strike;
-  // if (strike === 3) {
-  //   victory = true;
-  // }
+  if (strike === 3) {
+    victory = true;
+  }
 
   return {
     ball,
@@ -23,4 +14,24 @@ export function getResult(tryAnswer, correctAnswer) {
     out,
     victory,
   };
+}
+
+export function getOut(tryAnswer, correctAnswer) {
+  let out = correctAnswer.length;
+  for (let i = 0; i < tryAnswer.length; i++) {
+    if (correctAnswer.includes(tryAnswer[i])) {
+      out--;
+    }
+  }
+  return out;
+}
+
+export function getStrike(tryAnswer, correctAnswer) {
+  let strike = 0;
+  for (let i = 0; i < tryAnswer.length; i++) {
+    if (tryAnswer[i] === correctAnswer[i]) {
+      strike++;
+    }
+  }
+  return strike;
 }
