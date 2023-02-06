@@ -5,23 +5,7 @@ const {
 } = require("../utils/numberUtils");
 
 describe("number utils test code", () => {
-  test("getRandomNumber를 100번해도 0이상 11이하 지정한 숫자 미만 숫자가 나와야 한다.", () => {
-    const maxLength = 11;
-    const result = Array.from({ length: maxLength }, () => 0);
-    for (let i = 0; i < 100; i++) {
-      const randomNumber = getRandomNumber(maxLength);
-
-      expect(randomNumber >= 0).toEqual(true);
-      expect(randomNumber < maxLength).toEqual(true);
-      result[randomNumber] = result[randomNumber] + 1;
-    }
-
-    result.forEach((item) => {
-      expect(item > 1).toEqual(true);
-    });
-  });
-
-  test("getRandomNumber를 100번해도 0이상 100이하 지정한 숫자 미만 숫자가 나와야 한다.", () => {
+  test("getRandomNumber를 10000번해도 0이상 100이하 지정한 숫자 미만 숫자가 나와야 한다.", () => {
     const maxLength = 100;
     const result = Array.from({ length: maxLength }, () => 0);
     for (let i = 0; i < 10000; i++) {
@@ -64,8 +48,8 @@ describe("number utils test code", () => {
   });
 
   test("getRandomNumberList에 11이 들어간다면?", () => {
-    const result = getRandomNumberList(11);
+    const result = getRandomNumberList(15);
 
-    expect(result).toHaveLength(11);
+    expect(result).toHaveLength(15);
   });
 });
