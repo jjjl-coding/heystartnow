@@ -1,10 +1,15 @@
+import React from "react";
 import styled from "styled-components";
-
+type Props = {
+  changeInputValue: any;
+  nextFocus: any;
+  confirmButtonClickHandler: any;
+};
 export function Footer({
   changeInputValue,
   nextFocus,
   confirmButtonClickHandler,
-}) {
+}: any) {
   return (
     <FooterWrapper>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => {
@@ -20,13 +25,7 @@ export function Footer({
         );
       })}
       {/* 입력 버튼 */}
-      <ConfirmButton
-        onClick={() => {
-          confirmButtonClickHandler();
-        }}
-      >
-        입력
-      </ConfirmButton>
+      <ConfirmButton onClick={confirmButtonClickHandler}>입력</ConfirmButton>
     </FooterWrapper>
   );
 }

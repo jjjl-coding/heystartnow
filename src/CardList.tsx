@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import { Card } from "./Card";
+import React from "react";
 
-export function CardList({ cardListValues }) {
-  const bottomRef = useRef(null);
+export function CardList({ cardListValues }: any) {
+  const bottomRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -12,7 +13,7 @@ export function CardList({ cardListValues }) {
   return (
     <CardListWrapper>
       {/* 입력한 숫자에 대한 결과 카드 */}
-      {cardListValues.map((item) => {
+      {cardListValues.map((item: any) => {
         return <Card item={item}></Card>;
       })}
       <div ref={bottomRef} />

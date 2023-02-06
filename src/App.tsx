@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -10,11 +10,11 @@ import { Header } from "./Header";
 function App() {
   const maxLength = 5;
   const [inputFocus, setInputFocus] = useState(0);
-  const [inputValues, setInputValues] = useState();
-  const [cardListValues, setCardListValues] = useState([]);
+  const [inputValues, setInputValues] = useState<number[]>([]);
+  const [cardListValues, setCardListValues] = useState<Array<object>>([]);
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
-  const [randomNumber, setRandomNumber] = useState(
+  const [randomNumber, setRandomNumber] = useState<number[]>(
     getRandomNumberList(maxLength)
   );
 
@@ -25,7 +25,7 @@ function App() {
     setInputFocus(inputFocus + 1);
   }
 
-  function changeInputValue(number) {
+  function changeInputValue(number: number) {
     const clonedArray = [...inputValues];
     clonedArray[inputFocus] = number;
     setInputValues(clonedArray);
@@ -41,7 +41,7 @@ function App() {
   function ClearGame() {
     setGameEnd(false);
     setCardListValues([]);
-    setInputValues(["", "", ""]);
+    setInputValues([]);
     setInputFocus(0);
     setRandomNumber(getRandomNumberList(maxLength));
     setGameCount(gameCount + 1);

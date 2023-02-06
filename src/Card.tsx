@@ -1,10 +1,11 @@
+import React from "react";
 import styled from "styled-components";
 
-export function Card({ item }) {
+export function Card({ item }: any) {
   return item.result.strike === 3 ? null : (
     <Box>
       <InputValue>
-        {item.inputValues.map((inputValue) => {
+        {item.inputValues.map((inputValue: number) => {
           return <div>{inputValue}</div>;
         })}
       </InputValue>

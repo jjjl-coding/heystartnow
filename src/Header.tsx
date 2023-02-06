@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 
-export function Header({ gameCount }) {
+export function Header({ gameCount }: any) {
   return (
     <HeaderWrapper>
       <h1>제 {gameCount}회 숫자 야구 게임</h1>
