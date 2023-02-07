@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Modal from "react-modal";
+import ReactModal, { Styles } from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
 import React, { useState } from "react";
@@ -51,7 +51,8 @@ function App() {
     <Wrapper>
       <ContentsWrapper>
         {/* 모달입니다 */}
-        <Modal isOpen={gameEnd}>
+        {/* 스타일 넣어야함 */}
+        <ReactModal isOpen={gameEnd} style={modalstyle}>
           와! 우승!
           <button
             onClick={() => {
@@ -60,8 +61,8 @@ function App() {
           >
             다시하기
           </button>
-        </Modal>
-        <Header gameCount={gameCount} />
+        </ReactModal>
+        <Header gameCount={gameCount} randomNumber={randomNumber} />
         <Main
           changeInputValue={changeInputValue}
           setInputFocus={setInputFocus}
@@ -82,7 +83,7 @@ function App() {
 export default App;
 
 //모달스타일
-const modalstyle = {
+const modalstyle: Styles = {
   overlay: {
     position: "fixed",
     top: 0,
