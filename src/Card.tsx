@@ -1,8 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
+export interface CardProps {
+  item: {
+    inputValues: [];
+    result: {
+      ball: number;
+      strike: number;
+      out: number;
+      victory: boolean;
+    };
+  };
+}
 export function Card({ item }: any) {
-  return item.result.strike === 3 ? null : (
+  return item.result.victory === true ? null : (
     <Box>
       <InputValue>
         {item.inputValues.map((inputValue: number) => {

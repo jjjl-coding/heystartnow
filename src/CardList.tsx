@@ -2,18 +2,20 @@ import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import { Card } from "./Card";
 import React from "react";
-
-export function CardList({ cardListValues }: any) {
+interface Props {
+  cardListValues: Array<object>;
+}
+export function CardList({ cardListValues }: Props) {
   const bottomRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [cardListValues]);
-
   return (
     <CardListWrapper>
       {/* 입력한 숫자에 대한 결과 카드 */}
-      {cardListValues.map((item: any) => {
+      {cardListValues.map((item) => {
+        console.log(item);
         return <Card item={item}></Card>;
       })}
       <div ref={bottomRef} />

@@ -1,19 +1,26 @@
 export function getResult(tryAnswer: number[], correctAnswer: number[]) {
-  const out = getOut(tryAnswer, correctAnswer); //correctAnswer.length;
-  const strike = getStrike(tryAnswer, correctAnswer);
-  const ball = correctAnswer.length - out - strike;
+  const out: number = getOut(tryAnswer, correctAnswer); //correctAnswer.length;
+  const strike: number = getStrike(tryAnswer, correctAnswer);
+  const ball: number = correctAnswer.length - out - strike;
   let victory = false;
 
-  if (strike === 3) {
+  if (strike === correctAnswer.length) {
     victory = true;
   }
 
-  return {
+  type resultBox = {
+    ball?: number;
+    strike?: number;
+    out?: number;
+    victory?: boolean;
+  };
+  const resultBox = {
     ball,
     strike,
     out,
     victory,
   };
+  return resultBox;
 }
 
 export function getOut(tryAnswer: number[], correctAnswer: number[]) {

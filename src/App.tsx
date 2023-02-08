@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ReactModal, { Styles } from "react-modal";
+import Modal, { Styles } from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
 import React, { useState } from "react";
@@ -11,12 +11,12 @@ function App() {
   const maxLength = 5;
   const [inputFocus, setInputFocus] = useState(0);
   const [inputValues, setInputValues] = useState<number[]>([]);
-  const [cardListValues, setCardListValues] = useState<Array<object>>([]);
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
   const [randomNumber, setRandomNumber] = useState<number[]>(
     getRandomNumberList(maxLength)
   );
+  const [cardListValues, setCardListValues] = useState<Array<object>>([]);
 
   function nextFocus() {
     if (inputFocus === maxLength) {
@@ -52,7 +52,7 @@ function App() {
       <ContentsWrapper>
         {/* 모달입니다 */}
         {/* 스타일 넣어야함 */}
-        <ReactModal isOpen={gameEnd} style={modalstyle}>
+        <Modal isOpen={gameEnd} style={modalstyle}>
           와! 우승!
           <button
             onClick={() => {
@@ -61,7 +61,7 @@ function App() {
           >
             다시하기
           </button>
-        </ReactModal>
+        </Modal>
         <Header gameCount={gameCount} randomNumber={randomNumber} />
         <Main
           changeInputValue={changeInputValue}

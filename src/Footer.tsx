@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 type Props = {
-  changeInputValue: any;
-  nextFocus: any;
-  confirmButtonClickHandler: any;
+  changeInputValue: (number: number) => void;
+  nextFocus: () => void;
+  confirmButtonClickHandler: () => void;
 };
 export function Footer({
   changeInputValue,
   nextFocus,
   confirmButtonClickHandler,
-}: any) {
+}: Props) {
   return (
     <FooterWrapper>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => {
