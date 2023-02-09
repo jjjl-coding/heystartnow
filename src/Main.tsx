@@ -8,6 +8,7 @@ interface Props {
   inputValues: number[];
   cardListValues: Array<object>;
   maxLength: number;
+  inputFocus: number;
 }
 export function Main({
   changeInputValue,
@@ -15,6 +16,7 @@ export function Main({
   inputValues,
   cardListValues,
   maxLength,
+  inputFocus,
 }: Props) {
   return (
     <MainWrapper>
@@ -24,6 +26,7 @@ export function Main({
         inputValues={inputValues}
         changeInputValue={changeInputValue}
         maxLength={maxLength}
+        inputFocus={inputFocus}
       />
       <CardList cardListValues={cardListValues} />
     </MainWrapper>

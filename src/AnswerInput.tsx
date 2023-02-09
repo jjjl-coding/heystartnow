@@ -1,17 +1,28 @@
-import React, { SetStateAction, Dispatch } from "react";
+import React, { SetStateAction, Dispatch, useRef, useEffect } from "react";
 import styled from "styled-components";
 interface Props {
   setInputFocus: Dispatch<SetStateAction<number>>;
   inputValues: number[];
   changeInputValue: (number: number) => void;
   maxLength: number;
+  inputFocus: number;
 }
 export function AnswerInput({
   setInputFocus,
   inputValues,
   changeInputValue,
   maxLength,
+  inputFocus,
 }: Props) {
+  // const inputFocused: any = Array.from({ length: maxLength }, () => {
+  //   return useRef<HTMLInputElement>(null);
+  // });
+
+  // useEffect(() => {
+  //   console.log(inputFocused[inputFocus].current);
+  //   inputFocused[inputFocus].current.focus();
+  // });
+
   function oninput(e: any) {
     let number = Number(e.target.value);
     if (e.target.value.length > 1) {
@@ -19,6 +30,7 @@ export function AnswerInput({
     }
     changeInputValue(number);
   }
+
   function changeInputfocus(e: any) {
     setInputFocus(Number(e.target.id));
   }
@@ -29,6 +41,7 @@ export function AnswerInput({
         return (
           <InputBox
             id={String(index)}
+            //ref={inputFocused[index]}
             onFocus={changeInputfocus}
             type="number"
             onInput={oninput}

@@ -38,6 +38,7 @@ function App() {
       setGameEnd(true);
     }
   }
+
   function ClearGame() {
     setGameEnd(false);
     setCardListValues([]);
@@ -69,6 +70,7 @@ function App() {
           inputValues={inputValues}
           cardListValues={cardListValues}
           maxLength={maxLength}
+          inputFocus={inputFocus}
         />
         <Footer
           changeInputValue={changeInputValue}
