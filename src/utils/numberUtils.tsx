@@ -6,10 +6,15 @@ export function getRandomNumberList(arrayLength: number): number[] {
   return array;
 }
 
-export function getRandomNumber(maxNumber: number) {
-  const randomNumber = Math.floor(Math.random() * maxNumber);
-
-  return randomNumber;
+export function getRandomNumber(maxNumber: number): number {
+  let randomNumber: number;
+  for (let i = maxNumber; i < maxNumber * 10; i++) {
+    if (i / maxNumber > 1 && i % 10 === 0) {
+      randomNumber = Math.floor(Math.random() * i);
+      return randomNumber;
+    }
+  }
+  return maxNumber;
 }
 
 export function getSpareNumber(array: number[], maxNumber: number): number {
