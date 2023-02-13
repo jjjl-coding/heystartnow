@@ -5,10 +5,12 @@ import { CardList } from "./CardList";
 interface Props {
   changeInputValue: (number: number) => void;
   setInputFocus: Dispatch<SetStateAction<number>>;
-  inputValues: number[];
+  inputValues: (number | string)[];
   cardListValues: Array<object>;
   maxLength: number;
   inputFocus: number;
+  confirmButtonClickHandler: () => void;
+  nextFocus: () => void;
 }
 export function Main({
   changeInputValue,
@@ -17,6 +19,8 @@ export function Main({
   cardListValues,
   maxLength,
   inputFocus,
+  confirmButtonClickHandler,
+  nextFocus,
 }: Props) {
   return (
     <MainWrapper>
@@ -27,6 +31,8 @@ export function Main({
         changeInputValue={changeInputValue}
         maxLength={maxLength}
         inputFocus={inputFocus}
+        confirmButtonClickHandler={confirmButtonClickHandler}
+        nextFocus={nextFocus}
       />
       <CardList cardListValues={cardListValues} />
     </MainWrapper>

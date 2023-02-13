@@ -10,8 +10,8 @@ import { Header } from "./Header";
 function App() {
   const maxLength = 3;
   const [inputFocus, setInputFocus] = useState(0);
-  const [inputValues, setInputValues] = useState<number[]>(
-    Array.from({ length: maxLength }, () => 0)
+  const [inputValues, setInputValues] = useState<(number | string)[]>(
+    Array.from({ length: maxLength }, () => "")
   );
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
@@ -21,7 +21,7 @@ function App() {
   const [cardListValues, setCardListValues] = useState<Array<object>>([]);
 
   function nextFocus() {
-    if (inputFocus === maxLength) {
+    if (inputFocus === maxLength - 1) {
       return setInputFocus(0);
     }
     setInputFocus(inputFocus + 1);
@@ -34,6 +34,7 @@ function App() {
   }
 
   function confirmButtonClickHandler() {
+    console.log("hi");
     const result = getResult(inputValues, randomNumber);
     setCardListValues([...cardListValues, { inputValues, result: result }]);
     if (result.victory === true) {
@@ -44,11 +45,10 @@ function App() {
   function ClearGame() {
     setGameEnd(false);
     setCardListValues([]);
-    setInputValues(Array.from({ length: maxLength }, () => 0));
+    setInputValues(Array.from({ length: maxLength }, () => ""));
     setInputFocus(0);
     setRandomNumber(getRandomNumberList(maxLength));
     setGameCount(gameCount + 1);
-    console.log(inputValues);
   }
 
   return (
@@ -61,7 +61,6 @@ function App() {
           <button
             onClick={() => {
               ClearGame();
-              console.log(inputValues);
             }}
           >
             다시하기
@@ -75,6 +74,8 @@ function App() {
           cardListValues={cardListValues}
           maxLength={maxLength}
           inputFocus={inputFocus}
+          confirmButtonClickHandler={confirmButtonClickHandler}
+          nextFocus={nextFocus}
         />
         <Footer
           changeInputValue={changeInputValue}

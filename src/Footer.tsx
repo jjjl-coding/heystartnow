@@ -16,7 +16,7 @@ export function Footer({
         return (
           <NumerButton
             onClick={() => {
-              changeInputValue(number);
+              changeInputValue(Number(number));
               nextFocus();
             }}
           >

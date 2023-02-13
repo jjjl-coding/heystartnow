@@ -2,10 +2,12 @@ import React, { SetStateAction, Dispatch, useRef, useEffect } from "react";
 import styled from "styled-components";
 interface Props {
   setInputFocus: Dispatch<SetStateAction<number>>;
-  inputValues: number[];
+  inputValues: (number | string)[];
   changeInputValue: (number: number) => void;
   maxLength: number;
   inputFocus: number;
+  confirmButtonClickHandler: () => void;
+  nextFocus: () => void;
 }
 export function AnswerInput({
   setInputFocus,
@@ -13,6 +15,8 @@ export function AnswerInput({
   changeInputValue,
   maxLength,
   inputFocus,
+  confirmButtonClickHandler,
+  nextFocus,
 }: Props) {
   const inputFocused: any = Array.from({ length: maxLength }, () => {
     return useRef<HTMLInputElement>(null);
@@ -29,19 +33,22 @@ export function AnswerInput({
   }
 
   function changeInputfocus(e: any) {
-    e.target.value = null;
     setInputFocus(Number(e.target.id));
-    console.log(e.target.value);
+    console.log(e);
   }
-  function changeInputfocus2(e: any) {
+
+  function onKeyDown(e: any) {
     if (!Number.isNaN(Number(e.key))) {
       const number = Number(e.key);
       changeInputValue(number);
+      if (number == 0) {
+        e.target.value = 0;
+      }
     } else if (e.key === "Enter") {
-      if (inputFocus === maxLength - 1) {
-        setInputFocus(0);
+      if (inputValues.includes("") === false) {
+        confirmButtonClickHandler();
       } else {
-        setInputFocus(inputFocus + 1);
+        nextFocus();
       }
     }
   }
@@ -54,7 +61,7 @@ export function AnswerInput({
             id={String(index)}
             ref={inputFocused[index]}
             onFocus={changeInputfocus}
-            onKeyDown={changeInputfocus2}
+            onKeyDown={onKeyDown}
             type="number"
             //onInput={oninput}
             value={inputValues[index]}
