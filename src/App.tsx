@@ -9,13 +9,14 @@ import { Header } from "./Header";
 
 function App() {
   //상태,설정값
-  const maxLength = 3;
+  const [maxLength, setMaxLength] = useState<number>(3);
   const [inputFocus, setInputFocus] = useState<number>(0);
   const [inputValues, setInputValues] = useState<(number | string)[]>(
     Array.from({ length: maxLength }, () => "")
   );
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
+  const [gameLengthSet, setGameLengthSet] = useState(true);
   const [randomNumber, setRandomNumber] = useState<number[]>(
     getRandomNumberList(maxLength)
   );
@@ -27,6 +28,11 @@ function App() {
     }
     setInputFocus(inputFocus + 1);
   }
+
+  useEffect(() => {
+    setRandomNumber(getRandomNumberList(maxLength));
+    setInputValues(Array.from({ length: maxLength }, () => ""));
+  }, [maxLength]);
 
   function changeInputValue(number: number | string) {
     const clonedArray = [...inputValues];
@@ -51,6 +57,7 @@ function App() {
     setCardListValues([]);
     setInputValues(Array.from({ length: maxLength }, () => ""));
     setGameCount(gameCount + 1);
+    setGameLengthSet(true);
   }
   //App
   return (
@@ -58,7 +65,66 @@ function App() {
       <ContentsWrapper>
         {/* 모달입니다 */}
         {/* 스타일 넣어야함 */}
-        <Modal isOpen={gameEnd} style={modalstyle}>
+        <Modal isOpen={gameLengthSet} style={modalstyle2}>
+          정답 갯수를 설정해주세요
+          <button
+            onClick={() => {
+              setMaxLength(3);
+              setGameLengthSet(false);
+              <Main
+                changeInputValue={changeInputValue}
+                setInputFocus={setInputFocus}
+                inputValues={inputValues}
+                cardListValues={cardListValues}
+                maxLength={maxLength}
+                inputFocus={inputFocus}
+                nextFocus={nextFocus}
+                confirmButtonClickHandler={confirmButtonClickHandler}
+              />;
+            }}
+          >
+            3
+          </button>
+          <button
+            onClick={() => {
+              setMaxLength(4);
+              setGameLengthSet(false);
+              <Main
+                changeInputValue={changeInputValue}
+                setInputFocus={setInputFocus}
+                inputValues={inputValues}
+                cardListValues={cardListValues}
+                maxLength={maxLength}
+                inputFocus={inputFocus}
+                nextFocus={nextFocus}
+                confirmButtonClickHandler={confirmButtonClickHandler}
+              />;
+            }}
+          >
+            4
+          </button>
+          <button
+            onClick={() => {
+              setMaxLength(5);
+              setGameLengthSet(false);
+              {
+                <Main
+                  changeInputValue={changeInputValue}
+                  setInputFocus={setInputFocus}
+                  inputValues={inputValues}
+                  cardListValues={cardListValues}
+                  maxLength={maxLength}
+                  inputFocus={inputFocus}
+                  nextFocus={nextFocus}
+                  confirmButtonClickHandler={confirmButtonClickHandler}
+                />;
+              }
+            }}
+          >
+            5
+          </button>
+        </Modal>
+        <Modal isOpen={gameEnd} style={modalstyle1}>
           와! 우승!
           <button
             onClick={() => {
@@ -92,7 +158,7 @@ function App() {
 export default App;
 
 //모달스타일
-const modalstyle: Styles = {
+const modalstyle1: Styles = {
   overlay: {
     position: "fixed",
     top: 0,
@@ -104,6 +170,35 @@ const modalstyle: Styles = {
   content: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "200px",
+    height: "80px",
+    border: "1px solid #ccc",
+    background: "#fff",
+    overflow: "auto",
+    WebkitOverflowScrolling: "touch",
+    borderRadius: "10px",
+    outline: "none",
+    padding: "20px",
+  },
+};
+const modalstyle2: Styles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     position: "absolute",
