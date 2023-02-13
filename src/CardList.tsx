@@ -15,7 +15,6 @@ export function CardList({ cardListValues }: Props) {
     <CardListWrapper>
       {/* 입력한 숫자에 대한 결과 카드 */}
       {cardListValues.map((item) => {
-        console.log(item);
         return <Card item={item}></Card>;
       })}
       <div ref={bottomRef} />

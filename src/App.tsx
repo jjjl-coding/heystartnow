@@ -2,14 +2,15 @@ import styled from "styled-components";
 import Modal, { Styles } from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
 import { getResult } from "./gamePolicy/getResult";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Main } from "./Main";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 function App() {
+  //상태,설정값
   const maxLength = 3;
-  const [inputFocus, setInputFocus] = useState(0);
+  const [inputFocus, setInputFocus] = useState<number>(0);
   const [inputValues, setInputValues] = useState<(number | string)[]>(
     Array.from({ length: maxLength }, () => "")
   );
@@ -19,7 +20,7 @@ function App() {
     getRandomNumberList(maxLength)
   );
   const [cardListValues, setCardListValues] = useState<Array<object>>([]);
-
+  //함수
   function nextFocus() {
     if (inputFocus === maxLength - 1) {
       return setInputFocus(0);
@@ -27,30 +28,31 @@ function App() {
     setInputFocus(inputFocus + 1);
   }
 
-  function changeInputValue(number: number) {
+  function changeInputValue(number: number | string) {
     const clonedArray = [...inputValues];
     clonedArray[inputFocus] = number;
     setInputValues(clonedArray);
   }
 
-  function confirmButtonClickHandler() {
-    console.log("hi");
+  async function confirmButtonClickHandler() {
     const result = getResult(inputValues, randomNumber);
     setCardListValues([...cardListValues, { inputValues, result: result }]);
     if (result.victory === true) {
+      await new Promise((resolve, rejects) => {
+        resolve(setInputFocus(0));
+      });
       setGameEnd(true);
     }
   }
 
-  function ClearGame() {
+  function ReGame() {
     setGameEnd(false);
+    setRandomNumber(getRandomNumberList(maxLength));
     setCardListValues([]);
     setInputValues(Array.from({ length: maxLength }, () => ""));
-    setInputFocus(0);
-    setRandomNumber(getRandomNumberList(maxLength));
     setGameCount(gameCount + 1);
   }
-
+  //App
   return (
     <Wrapper>
       <ContentsWrapper>
@@ -60,7 +62,7 @@ function App() {
           와! 우승!
           <button
             onClick={() => {
-              ClearGame();
+              ReGame();
             }}
           >
             다시하기
@@ -74,8 +76,8 @@ function App() {
           cardListValues={cardListValues}
           maxLength={maxLength}
           inputFocus={inputFocus}
-          confirmButtonClickHandler={confirmButtonClickHandler}
           nextFocus={nextFocus}
+          confirmButtonClickHandler={confirmButtonClickHandler}
         />
         <Footer
           changeInputValue={changeInputValue}

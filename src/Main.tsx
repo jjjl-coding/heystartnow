@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { AnswerInput } from "./AnswerInput";
 import { CardList } from "./CardList";
 interface Props {
-  changeInputValue: (number: number) => void;
+  changeInputValue: (number: number | string) => void;
   setInputFocus: Dispatch<SetStateAction<number>>;
   inputValues: (number | string)[];
   cardListValues: Array<object>;
   maxLength: number;
   inputFocus: number;
-  confirmButtonClickHandler: () => void;
   nextFocus: () => void;
+  confirmButtonClickHandler: () => void;
 }
 export function Main({
   changeInputValue,
@@ -19,20 +19,20 @@ export function Main({
   cardListValues,
   maxLength,
   inputFocus,
-  confirmButtonClickHandler,
   nextFocus,
+  confirmButtonClickHandler,
 }: Props) {
   return (
     <MainWrapper>
-      {/* 입력칸 3개 생성 */}
+      {/* 입력칸 생성 */}
       <AnswerInput
+        changeInputValue={changeInputValue}
         setInputFocus={setInputFocus}
         inputValues={inputValues}
-        changeInputValue={changeInputValue}
         maxLength={maxLength}
         inputFocus={inputFocus}
-        confirmButtonClickHandler={confirmButtonClickHandler}
         nextFocus={nextFocus}
+        confirmButtonClickHandler={confirmButtonClickHandler}
       />
       <CardList cardListValues={cardListValues} />
     </MainWrapper>

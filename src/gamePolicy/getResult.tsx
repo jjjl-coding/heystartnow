@@ -32,7 +32,7 @@ export function getOut(
 ) {
   let out = correctAnswer.length;
   for (let i = 0; i < tryAnswer.length; i++) {
-    if (correctAnswer.includes(tryAnswer[i])) {
+    if (correctAnswer.includes(Number(tryAnswer[i]))) {
       out--;
     }
   }
@@ -45,7 +45,7 @@ export function getStrike(
 ) {
   let strike = 0;
   for (let i = 0; i < tryAnswer.length; i++) {
-    if (tryAnswer[i] === correctAnswer[i]) {
+    if (Number(tryAnswer[i]) === correctAnswer[i]) {
       strike++;
     }
   }

@@ -3,11 +3,11 @@ import styled from "styled-components";
 interface Props {
   setInputFocus: Dispatch<SetStateAction<number>>;
   inputValues: (number | string)[];
-  changeInputValue: (number: number) => void;
+  changeInputValue: (number: number | string) => void;
   maxLength: number;
   inputFocus: number;
-  confirmButtonClickHandler: () => void;
   nextFocus: () => void;
+  confirmButtonClickHandler: () => void;
 }
 export function AnswerInput({
   setInputFocus,
@@ -15,8 +15,8 @@ export function AnswerInput({
   changeInputValue,
   maxLength,
   inputFocus,
-  confirmButtonClickHandler,
   nextFocus,
+  confirmButtonClickHandler,
 }: Props) {
   const inputFocused: any = Array.from({ length: maxLength }, () => {
     return useRef<HTMLInputElement>(null);
@@ -26,23 +26,17 @@ export function AnswerInput({
     inputFocused[inputFocus].current.focus();
   }, [inputFocus]);
 
-  function oninput(e: any) {
-    const number = Number(e.target.value[e.target.value.length - 1]);
-    console.log(e);
-    changeInputValue(number);
-  }
-
   function changeInputfocus(e: any) {
     setInputFocus(Number(e.target.id));
-    console.log(e);
   }
 
   function onKeyDown(e: any) {
     if (!Number.isNaN(Number(e.key))) {
-      const number = Number(e.key);
-      changeInputValue(number);
-      if (number == 0) {
-        e.target.value = 0;
+      if (e.key === "0") {
+        e.target.value = "0";
+        changeInputValue("0");
+      } else {
+        changeInputValue(Number(e.key));
       }
     } else if (e.key === "Enter") {
       if (inputValues.includes("") === false) {
@@ -63,7 +57,6 @@ export function AnswerInput({
             onFocus={changeInputfocus}
             onKeyDown={onKeyDown}
             type="number"
-            //onInput={oninput}
             value={inputValues[index]}
           ></InputBox>
         );
