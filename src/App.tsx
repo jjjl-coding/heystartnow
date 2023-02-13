@@ -8,9 +8,11 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 function App() {
-  const maxLength = 5;
+  const maxLength = 3;
   const [inputFocus, setInputFocus] = useState(0);
-  const [inputValues, setInputValues] = useState<number[]>([]);
+  const [inputValues, setInputValues] = useState<number[]>(
+    Array.from({ length: maxLength }, () => 0)
+  );
   const [gameCount, setGameCount] = useState(0);
   const [gameEnd, setGameEnd] = useState(false);
   const [randomNumber, setRandomNumber] = useState<number[]>(
@@ -42,10 +44,11 @@ function App() {
   function ClearGame() {
     setGameEnd(false);
     setCardListValues([]);
-    setInputValues([]);
+    setInputValues(Array.from({ length: maxLength }, () => 0));
     setInputFocus(0);
     setRandomNumber(getRandomNumberList(maxLength));
     setGameCount(gameCount + 1);
+    console.log(inputValues);
   }
 
   return (
@@ -58,6 +61,7 @@ function App() {
           <button
             onClick={() => {
               ClearGame();
+              console.log(inputValues);
             }}
           >
             다시하기

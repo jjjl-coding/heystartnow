@@ -14,25 +14,36 @@ export function AnswerInput({
   maxLength,
   inputFocus,
 }: Props) {
-  // const inputFocused: any = Array.from({ length: maxLength }, () => {
-  //   return useRef<HTMLInputElement>(null);
-  // });
+  const inputFocused: any = Array.from({ length: maxLength }, () => {
+    return useRef<HTMLInputElement>(null);
+  });
 
-  // useEffect(() => {
-  //   console.log(inputFocused[inputFocus].current);
-  //   inputFocused[inputFocus].current.focus();
-  // });
+  useEffect(() => {
+    inputFocused[inputFocus].current.focus();
+  }, [inputFocus]);
 
   function oninput(e: any) {
-    let number = Number(e.target.value);
-    if (e.target.value.length > 1) {
-      number = e.target.value[e.target.value.length - 1];
-    }
+    const number = Number(e.target.value[e.target.value.length - 1]);
+    console.log(e);
     changeInputValue(number);
   }
 
   function changeInputfocus(e: any) {
+    e.target.value = null;
     setInputFocus(Number(e.target.id));
+    console.log(e.target.value);
+  }
+  function changeInputfocus2(e: any) {
+    if (!Number.isNaN(Number(e.key))) {
+      const number = Number(e.key);
+      changeInputValue(number);
+    } else if (e.key === "Enter") {
+      if (inputFocus === maxLength - 1) {
+        setInputFocus(0);
+      } else {
+        setInputFocus(inputFocus + 1);
+      }
+    }
   }
 
   return (
@@ -41,10 +52,11 @@ export function AnswerInput({
         return (
           <InputBox
             id={String(index)}
-            //ref={inputFocused[index]}
+            ref={inputFocused[index]}
             onFocus={changeInputfocus}
+            onKeyDown={changeInputfocus2}
             type="number"
-            onInput={oninput}
+            //onInput={oninput}
             value={inputValues[index]}
           ></InputBox>
         );
