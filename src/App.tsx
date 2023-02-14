@@ -20,7 +20,9 @@ function App() {
   const [randomNumber, setRandomNumber] = useState<number[]>(
     getRandomNumberList(maxLength)
   );
-  const [cardListValues, setCardListValues] = useState<Array<object>>([]);
+  const [cardListValues, setCardListValues] = useState<
+    Array<{ inputValues: (number | string)[]; result: object }>
+  >([]);
   //함수
   function nextFocus() {
     if (inputFocus === maxLength - 1) {
@@ -42,7 +44,11 @@ function App() {
 
   async function confirmButtonClickHandler() {
     const result = getResult(inputValues, randomNumber);
-    setCardListValues([...cardListValues, { inputValues, result: result }]);
+    if (
+      cardListValues.filter((e) => e.inputValues === inputValues).length === 0
+    ) {
+      setCardListValues([...cardListValues, { inputValues, result: result }]);
+    }
     if (result.victory === true) {
       await new Promise((resolve, rejects) => {
         resolve(setInputFocus(0));
@@ -64,65 +70,20 @@ function App() {
     <Wrapper>
       <ContentsWrapper>
         {/* 모달입니다 */}
-        {/* 스타일 넣어야함 */}
         <Modal isOpen={gameLengthSet} style={modalstyle2}>
           정답 갯수를 설정해주세요
-          <button
-            onClick={() => {
-              setMaxLength(3);
-              setGameLengthSet(false);
-              <Main
-                changeInputValue={changeInputValue}
-                setInputFocus={setInputFocus}
-                inputValues={inputValues}
-                cardListValues={cardListValues}
-                maxLength={maxLength}
-                inputFocus={inputFocus}
-                nextFocus={nextFocus}
-                confirmButtonClickHandler={confirmButtonClickHandler}
-              />;
-            }}
-          >
-            3
-          </button>
-          <button
-            onClick={() => {
-              setMaxLength(4);
-              setGameLengthSet(false);
-              <Main
-                changeInputValue={changeInputValue}
-                setInputFocus={setInputFocus}
-                inputValues={inputValues}
-                cardListValues={cardListValues}
-                maxLength={maxLength}
-                inputFocus={inputFocus}
-                nextFocus={nextFocus}
-                confirmButtonClickHandler={confirmButtonClickHandler}
-              />;
-            }}
-          >
-            4
-          </button>
-          <button
-            onClick={() => {
-              setMaxLength(5);
-              setGameLengthSet(false);
-              {
-                <Main
-                  changeInputValue={changeInputValue}
-                  setInputFocus={setInputFocus}
-                  inputValues={inputValues}
-                  cardListValues={cardListValues}
-                  maxLength={maxLength}
-                  inputFocus={inputFocus}
-                  nextFocus={nextFocus}
-                  confirmButtonClickHandler={confirmButtonClickHandler}
-                />;
-              }
-            }}
-          >
-            5
-          </button>
+          {Array.from({ length: 3 }).map((id, index) => {
+            return (
+              <button
+                onClick={() => {
+                  setMaxLength(index + 3);
+                  setGameLengthSet(false);
+                }}
+              >
+                {index + 3}
+              </button>
+            );
+          })}
         </Modal>
         <Modal isOpen={gameEnd} style={modalstyle1}>
           와! 우승!

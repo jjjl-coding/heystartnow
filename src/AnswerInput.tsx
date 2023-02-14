@@ -21,21 +21,13 @@ export function AnswerInput({
   const inputFocused: any = Array.from({ length: 10 }, () => {
     return useRef<HTMLInputElement>(null);
   });
-  console.log(inputFocused.length);
+
   useEffect(() => {
     inputFocused[inputFocus].current.focus();
   }, [inputFocus]);
 
-  // useEffect(() => {
-  //   for (let i = inputFocused.length; i < maxLength; i++) {
-  //     inputFocused.push(useRef<HTMLInputElement>(null));
-  //     console.log(inputFocused);
-  //   }
-  // }, [maxLength]);
-
   function changeInputfocus(e: any) {
     setInputFocus(Number(e.target.id));
-    console.log(inputFocused[inputFocus]);
   }
 
   function onKeyDown(e: any) {
@@ -49,9 +41,8 @@ export function AnswerInput({
     } else if (e.key === "Enter") {
       if (inputValues.includes("") === false) {
         confirmButtonClickHandler();
-      } else {
-        nextFocus();
       }
+      nextFocus();
     }
   }
 
