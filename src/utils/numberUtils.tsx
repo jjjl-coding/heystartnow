@@ -9,7 +9,7 @@ export function getRandomNumberList(arrayLength: number): number[] {
 export function getRandomNumber(maxNumber: number): number {
   let randomNumber: number;
   for (let i = maxNumber; i < maxNumber * 10; i++) {
-    if (i / maxNumber > 1 && i % 10 === 0) {
+    if (i % 10 === 0) {
       randomNumber = Math.floor(Math.random() * i);
       return randomNumber;
     }

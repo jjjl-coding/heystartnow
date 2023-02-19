@@ -1,8 +1,8 @@
-const {
+import {
   getRandomNumber,
   getRandomNumberList,
   getSpareNumber,
-} = require("../utils/numberUtils");
+} from "../utils/numberUtils";
 
 describe("number utils test code", () => {
   test("getRandomNumber를 10000번해도 0이상 100이하 지정한 숫자 미만 숫자가 나와야 한다.", () => {
