@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { AnswerInput } from "./AnswerInput";
 import { CardList } from "./CardList";
 interface Props {
-  changeInputValue: (number: number | string) => void;
+  changeInputValue: (number: number) => void;
   setInputFocus: Dispatch<SetStateAction<number>>;
-  inputValues: (number | string)[];
+  inputValues: (number | undefined)[];
   cardListValues: Array<object>;
   maxLength: number;
   inputFocus: number;

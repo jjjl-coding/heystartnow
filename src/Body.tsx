@@ -11,12 +11,12 @@ interface Props {
 
 export default function Body({ randomNumber, setGameEnd }: Props) {
   const [inputFocus, setInputFocus] = useState<number>(0);
-  const [inputValues, setInputValues] = useState<(number | string)[]>(
-    Array.from({ length: randomNumber.length }, () => "")
+  const [inputValues, setInputValues] = useState<(number | undefined)[]>(
+    Array.from({ length: randomNumber.length })
   );
 
   const [cardListValues, setCardListValues] = useState<
-    Array<{ inputValues: (number | string)[]; result: object }>
+    Array<{ inputValues: (number | undefined)[]; result: object }>
   >([]);
 
   function nextFocus() {
@@ -26,25 +26,25 @@ export default function Body({ randomNumber, setGameEnd }: Props) {
     setInputFocus(inputFocus + 1);
   }
 
-  function changeInputValue(number: number | string) {
+  function changeInputValue(number: number) {
     const clonedArray = [...inputValues];
     clonedArray[inputFocus] = number;
     setInputValues(clonedArray);
   }
 
   async function confirm() {
-    const result = getResult(inputValues, randomNumber);
-    if (
-      cardListValues.filter((e) => e.inputValues === inputValues).length === 0
-    ) {
-      setCardListValues([...cardListValues, { inputValues, result: result }]);
+    if (isArrayOnlyByNumber(inputValues)) {
+      const result = getResult(inputValues, randomNumber);
+      if (
+        cardListValues.filter((e) => e.inputValues === inputValues).length === 0
+      ) {
+        setCardListValues([...cardListValues, { inputValues, result: result }]);
+      }
+      if (result.victory === true) {
+        setGameEnd(true);
+      }
     }
-    if (result.victory === true) {
-      //   await new Promise((resolve) => {
-      //     resolve(setInputFocus(0));
-      //   });
-      setGameEnd(true);
-    }
+    throw Error();
   }
 
   return (
@@ -66,4 +66,8 @@ export default function Body({ randomNumber, setGameEnd }: Props) {
       />
     </>
   );
+}
+
+function isArrayOnlyByNumber(array: (number | undefined)[]): array is number[] {
+  return !array.includes(undefined);
 }

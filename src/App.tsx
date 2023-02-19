@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Modal, { Styles } from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Header } from "./Header";
 import Body from "./Body";
 

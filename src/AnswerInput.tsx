@@ -1,14 +1,16 @@
 import React, { SetStateAction, Dispatch, useRef, useEffect } from "react";
 import styled from "styled-components";
+
 interface Props {
   setInputFocus: Dispatch<SetStateAction<number>>;
-  inputValues: (number | string)[];
-  changeInputValue: (number: number | string) => void;
+  inputValues: (number | undefined)[];
+  changeInputValue: (number: number) => void;
   maxLength: number;
   inputFocus: number;
   nextFocus: () => void;
   confirmButtonClickHandler: () => void;
 }
+
 export function AnswerInput({
   setInputFocus,
   inputValues,
@@ -26,29 +28,25 @@ export function AnswerInput({
     inputFocused[inputFocus].current.focus();
   }, [inputFocus]);
 
-  function changeInputfocus(e: any) {
+  const changeInputfocus: React.FocusEventHandler = (e) => {
     setInputFocus(Number(e.target.id));
-  }
+  };
 
-  function onKeyDown(e: any) {
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (!Number.isNaN(Number(e.key))) {
-      if (e.key === "0") {
-        e.target.value = "0";
-        changeInputValue("0");
-      } else {
-        changeInputValue(Number(e.key));
-      }
+      changeInputValue(Number(e.key));
     } else if (e.key === "Enter") {
-      if (inputValues.includes("") === false) {
+      if (inputValues.includes(undefined) === false) {
         confirmButtonClickHandler();
       }
       nextFocus();
     }
-  }
+  };
 
   return (
     <InputWrapper>
       {inputValues.map((id, index) => {
+        const inputValue = inputValues[index];
         return (
           <InputBox
             id={String(index)}
@@ -56,11 +54,10 @@ export function AnswerInput({
             onFocus={changeInputfocus}
             onKeyDown={onKeyDown}
             type="number"
-            value={inputValues[index]}
+            value={inputValue === undefined ? "" : inputValue.toString()}
           ></InputBox>
         );
       })}
-      {}
     </InputWrapper>
   );
 }
