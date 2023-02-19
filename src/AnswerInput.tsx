@@ -18,7 +18,7 @@ export function AnswerInput({
   nextFocus,
   confirmButtonClickHandler,
 }: Props) {
-  const inputFocused: any = Array.from({ length: 10 }, () => {
+  const inputFocused: any = Array.from({ length: maxLength }, () => {
     return useRef<HTMLInputElement>(null);
   });
 

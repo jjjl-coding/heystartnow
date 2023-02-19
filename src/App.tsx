@@ -1,91 +1,29 @@
 import styled from "styled-components";
 import Modal, { Styles } from "react-modal";
 import { getRandomNumberList } from "./utils/numberUtils";
-import { getResult } from "./gamePolicy/getResult";
 import React, { useState, useEffect } from "react";
-import { Main } from "./Main";
-import { Footer } from "./Footer";
 import { Header } from "./Header";
+import Body from "./Body";
 
 function App() {
   //상태,설정값
-  const [maxLength, setMaxLength] = useState<number>(3);
-  const [inputFocus, setInputFocus] = useState<number>(0);
-  const [inputValues, setInputValues] = useState<(number | string)[]>(
-    Array.from({ length: maxLength }, () => "")
-  );
   const [gameCount, setGameCount] = useState(0);
-  const [gameEnd, setGameEnd] = useState(false);
-  const [gameLengthSet, setGameLengthSet] = useState(true);
-  const [randomNumber, setRandomNumber] = useState<number[]>(
-    getRandomNumberList(maxLength)
-  );
-  const [cardListValues, setCardListValues] = useState<
-    Array<{ inputValues: (number | string)[]; result: object }>
-  >([]);
-  //함수
-  function nextFocus() {
-    if (inputFocus === maxLength - 1) {
-      return setInputFocus(0);
-    }
-    setInputFocus(inputFocus + 1);
-  }
-
-  useEffect(() => {
-    setRandomNumber(getRandomNumberList(maxLength));
-    setInputValues(Array.from({ length: maxLength }, () => ""));
-  }, [maxLength]);
-
-  function changeInputValue(number: number | string) {
-    const clonedArray = [...inputValues];
-    clonedArray[inputFocus] = number;
-    setInputValues(clonedArray);
-  }
-
-  async function confirmButtonClickHandler() {
-    const result = getResult(inputValues, randomNumber);
-    if (
-      cardListValues.filter((e) => e.inputValues === inputValues).length === 0
-    ) {
-      setCardListValues([...cardListValues, { inputValues, result: result }]);
-    }
-    if (result.victory === true) {
-      await new Promise((resolve, rejects) => {
-        resolve(setInputFocus(0));
-      });
-      setGameEnd(true);
-    }
-  }
+  const [isGameEndModalOpen, setIsGameEndModalOpen] = useState(false);
+  const [isGameSettingOpen, setIsGameSettingOpen] = useState(true);
+  const [randomNumber, setRandomNumber] = useState<number[]>([]);
 
   function ReGame() {
-    setGameEnd(false);
-    setRandomNumber(getRandomNumberList(maxLength));
-    setCardListValues([]);
-    setInputValues(Array.from({ length: maxLength }, () => ""));
+    setIsGameEndModalOpen(false);
     setGameCount(gameCount + 1);
-    setGameLengthSet(true);
+    setIsGameSettingOpen(true);
+    // setInputFocus(0)
   }
   //App
   return (
     <Wrapper>
       <ContentsWrapper>
         {/* 모달입니다 */}
-        <Modal isOpen={gameLengthSet} style={modalstyle2}>
-          정답 갯수를 설정해주세요
-          {Array.from({ length: 3 }).map((id, index) => {
-            return (
-              <button
-                onClick={() => {
-                  setMaxLength(index + 3);
-                  setGameLengthSet(false);
-                }}
-              >
-                {index + 3}
-              </button>
-            );
-          })}
-        </Modal>
-        <Modal isOpen={gameEnd} style={modalstyle1}>
+        <Modal isOpen={isGameEndModalOpen} style={modalstyle1}>
           와! 우승!
           <button
             onClick={() => {
@@ -95,22 +33,31 @@ function App() {
             다시하기
           </button>
         </Modal>
-        <Header gameCount={gameCount} randomNumber={randomNumber} />
-        <Main
-          changeInputValue={changeInputValue}
-          setInputFocus={setInputFocus}
-          inputValues={inputValues}
-          cardListValues={cardListValues}
-          maxLength={maxLength}
-          inputFocus={inputFocus}
-          nextFocus={nextFocus}
-          confirmButtonClickHandler={confirmButtonClickHandler}
-        />
-        <Footer
-          changeInputValue={changeInputValue}
-          nextFocus={nextFocus}
-          confirmButtonClickHandler={confirmButtonClickHandler}
-        />
+        {isGameSettingOpen ? (
+          <>
+            정답 갯수를 설정해주세요
+            {Array.from({ length: 3 }).map((id, index) => {
+              return (
+                <button
+                  onClick={() => {
+                    setIsGameSettingOpen(false);
+                    setRandomNumber(getRandomNumberList(index + 3));
+                  }}
+                >
+                  {index + 3}
+                </button>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <Header gameCount={gameCount} randomNumber={randomNumber} />
+            <Body
+              randomNumber={randomNumber}
+              setGameEnd={setIsGameEndModalOpen}
+            ></Body>
+          </>
+        )}
       </ContentsWrapper>
     </Wrapper>
   );
@@ -148,35 +95,7 @@ const modalstyle1: Styles = {
     padding: "20px",
   },
 };
-const modalstyle2: Styles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-  },
-  content: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "200px",
-    height: "80px",
-    border: "1px solid #ccc",
-    background: "#fff",
-    overflow: "auto",
-    WebkitOverflowScrolling: "touch",
-    borderRadius: "10px",
-    outline: "none",
-    padding: "20px",
-  },
-};
+
 //스타일
 const Wrapper = styled.div`
   width: 100vw;
