@@ -16,7 +16,6 @@ function App() {
     setIsGameEndModalOpen(false);
     setGameCount(gameCount + 1);
     setIsGameSettingOpen(true);
-    // setInputFocus(0)
   }
   //App
   return (

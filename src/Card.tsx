@@ -1,22 +1,15 @@
+import { cardListItem } from "Body";
 import React from "react";
 import styled from "styled-components";
 
 export interface CardProps {
-  item: {
-    inputValues: [];
-    result: {
-      ball: number;
-      strike: number;
-      out: number;
-      victory: boolean;
-    };
-  };
+  item: cardListItem;
 }
-export function Card({ item }: any) {
+export function Card({ item }: CardProps) {
   return item.result.victory === true ? null : (
     <Box>
       <InputValue>
-        {item.inputValues.map((inputValue: number) => {
+        {item.inputValues.map((inputValue: number | undefined) => {
           return <div>{inputValue}</div>;
         })}
       </InputValue>

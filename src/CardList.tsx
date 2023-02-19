@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import { Card } from "./Card";
 import React from "react";
+import { cardListItem } from "Body";
 interface Props {
-  cardListValues: Array<object>;
+  cardListValues: cardListItem[];
 }
 export function CardList({ cardListValues }: Props) {
   const bottomRef = useRef<null | HTMLDivElement>(null);

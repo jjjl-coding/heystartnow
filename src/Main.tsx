@@ -1,3 +1,4 @@
+import { cardListItem } from "Body";
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { AnswerInput } from "./AnswerInput";
@@ -6,8 +7,7 @@ interface Props {
   changeInputValue: (number: number) => void;
   setInputFocus: Dispatch<SetStateAction<number>>;
   inputValues: (number | undefined)[];
-  cardListValues: Array<object>;
-  maxLength: number;
+  cardListValues: Array<cardListItem>;
   inputFocus: number;
   nextFocus: () => void;
   confirmButtonClickHandler: () => void;
@@ -17,7 +17,6 @@ export function Main({
   setInputFocus,
   inputValues,
   cardListValues,
-  maxLength,
   inputFocus,
   nextFocus,
   confirmButtonClickHandler,
@@ -29,7 +28,6 @@ export function Main({
         changeInputValue={changeInputValue}
         setInputFocus={setInputFocus}
         inputValues={inputValues}
-        maxLength={maxLength}
         inputFocus={inputFocus}
         nextFocus={nextFocus}
         confirmButtonClickHandler={confirmButtonClickHandler}

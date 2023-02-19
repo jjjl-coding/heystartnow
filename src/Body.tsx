@@ -4,6 +4,10 @@ import { Footer } from "./Footer";
 import React from "react";
 import { getResult } from "./gamePolicy/getResult";
 
+export type cardListItem = {
+  inputValues: (number | undefined)[];
+  result: { ball: number; strike: number; out: number; victory: boolean };
+};
 interface Props {
   randomNumber: number[];
   setGameEnd: Dispatch<SetStateAction<boolean>>;
@@ -15,11 +19,10 @@ export default function Body({ randomNumber, setGameEnd }: Props) {
     Array.from({ length: randomNumber.length })
   );
 
-  const [cardListValues, setCardListValues] = useState<
-    Array<{ inputValues: (number | undefined)[]; result: object }>
-  >([]);
+  const [cardListValues, setCardListValues] = useState<Array<cardListItem>>([]);
 
   function nextFocus() {
+    console.log(inputFocus);
     if (inputFocus === randomNumber.length - 1) {
       return setInputFocus(0);
     }
@@ -54,7 +57,6 @@ export default function Body({ randomNumber, setGameEnd }: Props) {
         setInputFocus={setInputFocus}
         inputValues={inputValues}
         cardListValues={cardListValues}
-        maxLength={randomNumber.length}
         inputFocus={inputFocus}
         nextFocus={nextFocus}
         confirmButtonClickHandler={confirm}
