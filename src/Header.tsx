@@ -9,7 +9,6 @@ export function Header({ gameCount, randomNumber }: Props) {
   return (
     <HeaderWrapper>
       <h1>제 {gameCount}회 숫자 야구 게임</h1>
-      <h1> {randomNumber}</h1>
     </HeaderWrapper>
   );
 }
